@@ -3,11 +3,11 @@ import os
 import glob
 import shutil
 
-
 from config import separator
-from config import insert_mode
-from config import query_path
 
+from config import insert_mode
+from config import save_sql
+from config import sql_path 
 
 
 class SQLTemplates:
@@ -25,6 +25,14 @@ FROM   'filepathplaceholder'
         firstrow = 2 
     )"""
     insert_row = "insert into tablenameplaceholder values ( "
+
+if sql_path is None and save_sql == True:
+    sql_path = os.path.dirname(os.path.abspath(__file__))
+    sql_path = os.path.join(sql_path,"imports_sql")
+    if  os.path.isdir(sql_path):
+        shutil.rmtree(sql_path)
+    os.mkdir(sql_path)
+
 
 
 def define_sql_type(col_name,s,type ="strings"):
@@ -120,11 +128,11 @@ def gen_sql_file(f_c):
         query = query + insert_all_rows 
         
     query = query + "\n end" + "\n commit tran"
-
-    if os.path.isfile(query_path + "\\" + table_name +".sql"):
-        os.remove(query_path + "\\" + table_name +".sql")
-    with open(query_path + "\\" + table_name +".sql","w",encoding="utf-8") as f:
-        f.write(query)
+    if save_sql:
+        if os.path.isfile(sql_path + "\\" + table_name +".sql"):
+            os.remove(sql_path + "\\" + table_name +".sql")
+        with open(sql_path + "\\" + table_name +".sql","w",encoding="utf-8") as f:
+            f.write(query)
 
 
     return query
