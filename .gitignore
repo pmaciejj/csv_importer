@@ -1,0 +1,6 @@
+**/imports_sql
+**/test_folder
+**/__pycache__
+**/.vscode
+*importer.log
+*config.py
