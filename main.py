@@ -12,8 +12,6 @@ logging.basicConfig(filename='importer.log',format='%(asctime)s - %(message)s')
 
 if __name__ == "__main__":
 
-    query_path = os.path.dirname(os.path.abspath(__file__))
-    query_path = os.path.join(query_path,"imports_sql")
     
 # create list of files to be imported (files group in subfolder are joined)
     files_list= []
